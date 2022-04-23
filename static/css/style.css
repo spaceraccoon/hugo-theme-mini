@@ -4,7 +4,7 @@ html[theme='dark-mode'] {
 
 body {
   line-height: 1;
-  font: normal 15px/1.5em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: normal 16px/1.6em 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #404040;
   line-height: 1.75;
   letter-spacing: 0.008em;
@@ -145,7 +145,6 @@ nav.navigation a {
   right: 6px;
   padding: 8px 12px;
   color: #5badf0;
-  font-size: 13px;
   line-height: 1.35;
   border-radius: 3px;
 }
@@ -256,15 +255,14 @@ nav.navigation a.button {
 
 .profile .avatar {
   display: inline-block;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 150px;
+  height: 150px;
 }
 
 .profile h1 {
   font-weight: 400;
   letter-spacing: 0px;
-  font-size: 20px;
+  font-size: 36px;
   color: #404040;
   margin-bottom: 0;
   margin-top: 0;
@@ -279,7 +277,7 @@ nav.navigation a.button {
 
 /* index post list */
 #list-page {
-  max-width: 580px;
+  max-width: 680px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -294,7 +292,6 @@ nav.navigation a.button {
   font-size: 20px;
   font-weight: 400;
   margin: 0;
-  width: 80%;
 }
 
 #list-page .title a {
@@ -307,9 +304,6 @@ nav.navigation a.button {
 }
 
 #list-page .date {
-  width: 20%;
-  float: right;
-  text-align: right;
   position: relative;
   top: 1px;
   color: #bbb;
@@ -403,7 +397,7 @@ nav.navigation a.button {
 
 
 #archive {
-  max-width: 580px;
+  max-width: 680px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -488,14 +482,14 @@ nav.navigation a.button {
 
 /* section page */
 #section {
-  max-width: 580px;
+  max-width: 680px;
   margin: 48px auto 0 auto;
   padding: 0 12px;
 }
 
 /* 404 page */
 #page-404 {
-  max-width: 580px;
+  max-width: 680px;
   margin: 0 auto;
   padding: 0 24px;
 }
