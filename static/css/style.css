@@ -18,6 +18,12 @@ a:hover {
   color: #0366d6;
 }
 
+code {
+  background-color: rgba(0, 0, 0, 0.06);
+  word-wrap: break-word;
+  text-indent: 0;
+}
+
 /* markdown content styles */
 blockquote {
   margin-top: 5px;
