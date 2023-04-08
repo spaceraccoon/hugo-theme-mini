@@ -18,10 +18,12 @@ a:hover {
   color: #0366d6;
 }
 
+/* Fixes iOS font sizing anomaly */
 code {
-  background-color: rgba(0, 0, 0, 0.06);
-  word-wrap: break-word;
-  text-indent: 0;
+  text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* markdown content styles */
