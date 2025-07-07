@@ -7,6 +7,7 @@ body {
   color: #404040;
   line-height: 1.75;
   letter-spacing: 0.008em;
+  margin: 0px;
 }
 
 a {
@@ -119,6 +120,12 @@ h4:hover a {
 .highlight {
   max-width: 100%;
   overflow-x: auto;
+}
+
+.top-banner {
+  color: #fff;
+  background-color: #5badf0;
+  text-align: center;
 }
 
 /* navigation */
