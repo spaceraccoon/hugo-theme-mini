@@ -95,7 +95,14 @@ defaultContentLanguage: en
 
 要使用评论功能，你需要添加下面的配置：
 
-- 设置 Disqus： `disqusShortname: your-disqus-shorname`
+- 设置 Disqus：
+
+    ```yaml
+    services:
+      disqus:
+        shortname: your-disqus-shortname
+    ```
+
 - 启用评论：
 
     ```yaml
@@ -107,7 +114,14 @@ defaultContentLanguage: en
 
 要使用 Google 分析功能，你需要添加下面的配置：
 
-- 设置 Google Analytics ID： `googleAnalytics: your-google-analytics-id`
+- 设置 Google Analytics ID：
+
+    ```yaml
+    services:
+      googleAnalytics:
+        id: G-MEASUREMENT_ID
+    ```
+
 - 启用 Google Analytics：
 
     ```yaml

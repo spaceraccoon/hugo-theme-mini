@@ -1,15 +1,17 @@
 <header class="profile">
-    {{ if .Site.Params.avatarLink }}
-        <a href="{{ .Site.Params.avatarLink }}">
-          <img class="avatar" alt="avatar" src="{{ index .Site.Params.Images 0 | relURL }}" />
-        </a>
-    {{ else }}
-        <img class="avatar" alt="avatar" src="{{ index .Site.Params.Images 0 | relURL }}" />
-    {{ end }}
+    {{- /* `avatar` (and optional `avatar2x`) should be sized for the 150px slot.
+           Without them: the first social image, then static/images/avatar.png. */}}
+    {{- $avatar := .Site.Params.avatar }}
+    {{- if not $avatar }}{{ with .Site.Params.images }}{{ $avatar = index . 0 }}{{ end }}{{ end }}
+    {{- if not $avatar }}{{ $avatar = "/images/avatar.png" }}{{ end }}
+    {{- with $avatar }}
+    {{ with $.Site.Params.avatarLink }}<a href="{{ . }}">{{ end -}}
+    <img class="avatar" src="{{ . | relURL }}"{{ with $.Site.Params.avatar2x }} srcset="{{ $avatar | relURL }} 1x, {{ . | relURL }} 2x"{{ end }} alt="{{ $.Site.Title }}" width="150" height="150" decoding="async">
+    {{- if $.Site.Params.avatarLink }}</a>{{ end }}
+    {{- end }}
 
     <h1>{{ .Site.Title }}</h1>
-    
     {{ with .Site.Params.Bio }}
-      <h2>{{ . | markdownify }}</h2>
+      <p class="bio">{{ . | markdownify }}</p>
     {{ end }}
 </header>

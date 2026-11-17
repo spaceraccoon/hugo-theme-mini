@@ -1,47 +1,38 @@
+{{/* Paginated home pages (/page/2/ …) are their own canonical URL. */}}
+{{ define "canonical" }}{{ $paginator := .Paginate .Site.RegularPages }}<link rel="canonical" href="{{ $paginator.URL | absURL }}">{{ end }}
+
 {{ define "main" }}
 {{ partial "profile.html" . }}
 
 <div id="list-page">
-    {{ $pages := .Site.RegularPages }}
-    {{ $paginator := .Paginate ($pages) }}
+    {{ $paginator := .Paginate .Site.RegularPages }}
     {{ range $paginator.Pages }}
-        {{ $title := .Title }}
-        {{ $summary := .Summary }}
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h1>
-            <div class ="date">
-                <time datetime="{{ .PublishDate }}">{{ i18n "publishDate" . }}</time>  
-            </div>
+        <article class="item">
+          <h2 class="title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <div class="date">
+              <time datetime="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ i18n "publishDate" . }}</time>
           </div>
 
-          {{ if ne .Site.Params.hiddenPostSummaryInHomePage true }}
-              <div class="summary">{{ $summary | plainify | htmlUnescape }}</div>
+          {{ if ne $.Site.Params.hiddenPostSummaryInHomePage true }}
+              <div class="summary">{{ .Summary | plainify | htmlUnescape }}</div>
           {{ end }}
-
-        </section>
+        </article>
     {{ end }}
 
     {{ if or ($paginator.HasPrev) ($paginator.HasNext) }}
-        <div class="pagination">
+        <nav class="pagination" aria-label="{{ i18n "pagination" | default "Pagination" }}">
           {{ if $paginator.HasPrev }}
-              <span class="prev">
-                  <a href="{{.Paginator.Prev.URL}}">
-                      <span class="arrow">←</span> {{ with .Site.Params.newerPosts }}{{ . }}{{ else }}{{ i18n "postsNewer" }}{{ end }}
-                  </a>
-            </span>
+              <a class="prev" rel="prev" href="{{ $paginator.Prev.URL }}">
+                  <span class="arrow" aria-hidden="true">←</span> {{ .Site.Params.newerPosts | default (i18n "postsNewer") }}
+              </a>
           {{ end }}
-          
+
           {{ if $paginator.HasNext }}
-              <span class="next">
-                  <a href="{{.Paginator.Next.URL}}">
-                      {{ with .Site.Params.olderPosts }}{{ . }}{{ else }}{{ i18n "postsOlder" }}{{ end }} <span class="arrow">→</span>
-                  </a>
-              </span>
+              <a class="next" rel="next" href="{{ $paginator.Next.URL }}">
+                  {{ .Site.Params.olderPosts | default (i18n "postsOlder") }} <span class="arrow" aria-hidden="true">→</span>
+              </a>
           {{ end }}
-        </div>
+        </nav>
     {{ end }}
-
-
 </div>
 {{ end }}

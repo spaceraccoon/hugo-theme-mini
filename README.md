@@ -63,6 +63,8 @@ For more information read the official [setup guide](//gohugo.io/overview/instal
 
 After installing the theme successfully it requires a just a few more steps to get your site running.
 
+The theme needs Hugo 0.158.0 or newer.
+
 
 ### 2.1 The config file
 
@@ -92,7 +94,14 @@ More about multiple languages: [Multilingual Mode](https://gohugo.io/content-man
 
 To enable comments, add following to your config file:
 
-- Disqus shortname: `disqusShortname: your-disqus-shortname`
+- Disqus shortname:
+
+    ```yaml
+    services:
+      disqus:
+        shortname: your-disqus-shortname
+    ```
+
 - Enable Comment:
 
     ```yaml
@@ -104,7 +113,14 @@ To enable comments, add following to your config file:
 
 To enable google analytics, add following to your config file:
 
-- Google Analytics ID: `googleAnalytics: your-google-analytics-id`
+- Google Analytics ID:
+
+    ```yaml
+    services:
+      googleAnalytics:
+        id: G-MEASUREMENT_ID
+    ```
+
 - Enable Google Analytics:
 
     ```yaml
@@ -114,17 +130,45 @@ To enable google analytics, add following to your config file:
 
 ### 2.5 Logo and favicon
 
-You can replace the log in the top of each page and favicon with your own images. To do that put your own logo and favicon into the `images` directory of your website static directory, then named them `avatar.png` and `favicon.ico`. For example:
+The avatar at the top of list pages and the favicon come from site params:
 
-```
-- content
-- static
-└── images
-    ├── avatar.png
-    └── favicon.ico
+```yaml
+params:
+  avatar: /images/avatar-150.webp    # shown at 150x150
+  avatar2x: /images/avatar-300.webp  # optional, for high-DPI screens
+  favicon: /images/favicon-96.png
+  images: ['/images/card.png']       # social card image (Open Graph / Twitter)
 ```
 
-### 2.6 Nearly finished
+Size `avatar` for its 150px slot (and `avatar2x` at 300px); a large original here costs every visitor bytes they never see. If `avatar` or `favicon` is not set, the first entry of `images` is used, and failing that `static/images/avatar.png` and `static/images/favicon.ico`.
+
+### 2.6 Social links
+
+Footer icons (github, twitter, stackoverflow, facebook) are read from `params.social`. Give each network a handle, or a full URL:
+
+```yaml
+params:
+  social:
+    github: your-name
+    twitter: your-name                  # also used for the twitter:site tag
+    stackoverflow: 1234567/your-name    # the part after stackoverflow.com/users/
+```
+
+Use a handle for `twitter`: Hugo's built-in Twitter Card template reads `params.social.twitter` and prefixes it with `@`.
+
+### 2.7 Syntax highlighting
+
+The theme styles code with CSS classes, so that colours meet WCAG AA contrast and follow the reader's light or dark colour scheme. Turn off Chroma's inline styles:
+
+```yaml
+markup:
+  highlight:
+    noClasses: false
+```
+
+The palette lives in `assets/css/syntax.css`.
+
+### 2.8 Nearly finished
 
 In order to see your site in action, run Hugo's built-in local server.
 
@@ -134,7 +178,7 @@ $ hugo server
 
 Now enter http://localhost:1313 in the address bar of your browser.
 
-### 2.7 Production
+### 2.9 Production
 
 To run in production (e.g. to have Google Analytics show up), run HUGO_ENV=production before your build command. For example:
 
@@ -177,6 +221,8 @@ enableComments: false
 
 ### 3.3 Custom CSS and JS
 
+The theme's own stylesheet (`assets/css/style.css` and `assets/css/syntax.css`) is minified and inlined into each page, so there is no render-blocking stylesheet request. It supports light and dark colour schemes through CSS custom properties; to restyle the theme, override those properties in a custom stylesheet.
+
 You can put your custom css and js files to `static` directory, or use remote css and js files which start with `http://` or `https://`.
 
 For example:
@@ -206,6 +252,14 @@ For example:
 ```yaml
 hiddenPostSummaryInHomePage: true
 ```
+
+### 3.6 Headings in content
+
+Every page already has an `<h1>` (the post title, or the site title on list pages). If a page's markdown uses top-level headings (`# Section`) for its sections, the theme renders all of that page's headings one level down (`#` becomes `<h2>`, `##` becomes `<h3>`, and so on), so each page keeps a single `<h1>`. Markdown that starts its sections at `##` is rendered as written.
+
+### 3.7 Images in content
+
+Markdown images are lazy-loaded (except the first on a page) and get `width` and `height` attributes when the file is found under `static/`, which prevents layout shift while they load.
 
 ## License
 

@@ -1,3 +1,17 @@
-<p class="markdown-image">
-  <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}"{{ end }} />
-</p>
+{{- /* Add intrinsic dimensions for local raster images so the browser can
+       reserve space before they load (no layout shift). Skipped for remote
+       URLs, and for Git LFS pointer stubs: a checkout without LFS content
+       has small text files in place of the images, which cannot be decoded. */ -}}
+{{- $src := .Destination -}}
+{{- $width := 0 }}{{ $height := 0 -}}
+{{- if and (not (findRE `^([a-zA-Z][a-zA-Z0-9+.-]*:)?//` $src)) (findRE `(?i)\.(png|jpe?g|gif|webp)$` $src) -}}
+  {{- $file := printf "static/%s" (strings.TrimPrefix "/" $src) -}}
+  {{- if fileExists $file -}}
+    {{- $stub := false -}}
+    {{- if lt (os.Stat $file).Size 1024 }}{{ $stub = hasPrefix (readFile $file) "version https://git-lfs" }}{{ end -}}
+    {{- if not $stub -}}
+      {{- with imageConfig $file }}{{ $width = .Width }}{{ $height = .Height }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $src | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $width }} width="{{ $width }}" height="{{ $height }}"{{ end }} loading="lazy" decoding="async">

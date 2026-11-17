@@ -1,0 +1,23 @@
+{{- /* Rendered page content, with three adjustments that markdown render hooks
+       cannot make on their own:
+
+       1. The image hook defers every image. The first one may be above the
+          fold (and the LCP element), so it loads eagerly, at high priority.
+          Keep $deferred in sync with _markup/render-image.html.
+       2. Tables get a scroll container, so a wide table scrolls inside the
+          text column instead of squeezing its cells or widening the page.
+          It is focusable so that it can be scrolled from the keyboard, like
+          the code blocks Hugo renders.
+       3. Older Goldmark versions put role="doc-endnote" on each footnote.
+          That role is deprecated and fails accessibility audits; the list
+          item it sits on needs no role. */ -}}
+{{- $content := .Content -}}
+{{- $deferred := ` loading="lazy" decoding="async"` -}}
+{{- $parts := split $content $deferred -}}
+{{- if gt (len $parts) 1 -}}
+  {{- $content = printf `%s fetchpriority="high"%s` (index $parts 0) (delimit (after 1 $parts) $deferred) -}}
+{{- end -}}
+{{- $content = replace $content "<table>" `<div class="table-wrap" tabindex="0"><table>` -}}
+{{- $content = replace $content "</table>" "</table></div>" -}}
+{{- $content = replace $content ` role="doc-endnote"` "" -}}
+{{- $content | safeHTML -}}

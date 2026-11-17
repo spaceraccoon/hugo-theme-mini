@@ -1,10 +1,10 @@
 {{ define "main" }}
 
-<section id="single">
+<article id="single">
     <h1 class="title">{{ .Title }}</h1>
 
     <div class="tip">
-        <time datetime="{{ .PublishDate }}">{{ i18n "publishDateFull" . }}</time>
+        <time datetime="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ i18n "publishDateFull" . }}</time>
         <span class="split">
           ·
         </span>
@@ -19,27 +19,26 @@
         </span>
     </div>
 
-    
+
     {{ if or .Site.Params.showToc .Params.showToc }}
         {{ partial "toc.html" . }}
     {{ end }}
 
 
     <div class="content">
-      {{ .Content }}
+      {{ partial "content.html" . }}
     </div>
 
     {{ with .Params.tags }}
         <div class="tags">
             {{ range . }}
-                <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a>
+                <a href="{{ printf "tags/%s/" (. | urlize) | relURL }}">{{ . }}</a>
             {{ end }}
         </div>
     {{ end}}
-    
+
     {{ partial "comment.html" . }}
 
-</section>
+</article>
 
 {{ end }}
-
