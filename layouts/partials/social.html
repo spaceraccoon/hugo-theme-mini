@@ -1,10 +1,19 @@
 <div id="social">
-
-{{ range $key, $val := .Site.Social }}
-    <a class="symbol" href="{{ $val }}" rel="me" target="_blank">
-        {{ $svg :=  print "svgs/" $key ".svg" }}
-        {{ partial $svg (dict "fill" "#bbbbbb" "width" 28 "height" 28 ) }}
+{{- /* params.social holds a handle (what Hugo's Twitter Cards template expects)
+       or a full URL for each network. Only networks with an icon are shown. */}}
+{{- $networks := dict
+      "facebook"      (dict "label" "Facebook"       "prefix" "https://www.facebook.com/")
+      "github"        (dict "label" "GitHub"         "prefix" "https://github.com/")
+      "stackoverflow" (dict "label" "Stack Overflow" "prefix" "https://stackoverflow.com/users/")
+      "twitter"       (dict "label" "Twitter"        "prefix" "https://twitter.com/") }}
+{{- $social := . }}
+{{- range $key := slice "facebook" "github" "stackoverflow" "twitter" }}
+  {{- with index $social $key }}
+    {{- $net := index $networks $key }}
+    {{- $url := cond (findRE `^https?://` .) . (printf "%s%s" $net.prefix .) }}
+    <a class="symbol" href="{{ $url }}" rel="me noopener" target="_blank" aria-label="{{ $net.label }}">
+        {{ partial (print "svgs/" $key ".svg") (dict "width" 28 "height" 28) }}
     </a>
-{{ end }}
-
+  {{- end }}
+{{- end }}
 </div>

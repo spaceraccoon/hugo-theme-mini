@@ -1,5 +1,5 @@
 baseURL: https://example.com
-languageCode: en-us
+locale: en-US
 title: Hugo
 theme: hugo-theme-mini
 
@@ -13,17 +13,22 @@ hasCJKLanguage: true
 permalinks:
   posts: /posts/:title/
 
-paginate: 3
+pagination:
+  pagerSize: 3
 
-googleAnalytics: your-google-analytics-id
-disqusShortname: your-disqus-shortname
+services:
+  googleAnalytics:
+    id: your-google-analytics-id
+  disqus:
+    shortname: your-disqus-shortname
 
 # Hugo Configure Markup
 # More info: https://gohugo.io/getting-started/configuration-markup#
 markup:
   highlight:
     guessSyntax: true
-    style: emacs
+    # the theme styles code with CSS classes (assets/css/syntax.css)
+    noClasses: false
   tableOfContents:
     endLevel: 3
     ordered: false
@@ -32,14 +37,6 @@ markup:
   goldmark:
     renderer:
       unsafe: true
-
-# Social links in footer, support github,twitter,stackoverflow,facebook
-social:
-  # e.g.
-  github: your-github-link
-  twitter: your-github-link
-  stackoverflow: your-github-link
-  # facebook: your-facebook-link
 
 
 # Site parameters
@@ -51,6 +48,21 @@ params:
   # Site Description, used in HTML meat
   description: My Blog
 
+  # Footer links (github, twitter, stackoverflow, facebook): a handle or a full URL.
+  # Hugo's Twitter Card tags also read the twitter handle from here.
+  social:
+    github: your-github-username
+    twitter: your-twitter-handle
+    stackoverflow: 1234567/your-stackoverflow-name
+    # facebook: your-facebook-username
+
+  # Avatar (150px slot, optional 2x version), favicon and social card image.
+  # Defaults: static/images/avatar.png and static/images/favicon.ico
+  # avatar: /images/avatar-150.webp
+  # avatar2x: /images/avatar-300.webp
+  # favicon: /images/favicon-96.png
+  # images: ['/images/card.png']
+
 
   ###########################################
   # Optional Configuration
@@ -58,9 +70,9 @@ params:
 
   # To enable RSS, you could set `enableRSS: true`, default is `true`
   enableRSS: true
-  # To enable comments, you may need to set `disqusShortname`
+  # To enable comments, you may need to set `services.disqus.shortname`
   enableComments: true
-  # To enable comments, you may need to set `googleAnalytics`
+  # To enable Google Analytics, you may need to set `services.googleAnalytics.id`
   enableGoogleAnalytics: true
   # To enable table of content, you could set `showToc: true`, default is `false`
   showToc: true

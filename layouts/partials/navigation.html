@@ -1,17 +1,14 @@
-<nav class="navigation">
-	{{ if not .IsHome }}
-		<a href="{{ "/" | relURL }}"> <span class="arrow">←</span>{{ with .Site.Params.home }}{{ . }}{{ else }}{{ i18n "home" }}{{ end }}</a>
-	{{ end }}
-	<a href="{{ "/posts" | relURL }}">{{ with .Site.Params.archive }}{{ . }}{{ else }}{{ i18n "archive" }}{{ end }}</a>
-	<a href="{{ "/tags" | relURL }}">{{ with .Site.Params.tags }}{{ . }}{{ else }}{{ i18n "tags" }}{{ end }}</a>
-	<a href="{{ "/about" | relURL }}">{{ with .Site.Params.about }}{{ . }}{{ else }}{{ i18n "about" }}{{ end }}</a>
-	<a class="button" href="/subscribe">{{ with .Site.Params.subscribe }}{{ . }}{{ else }}{{ i18n "subscribe" }}{{ end }}</a>
-
-	{{ range $element := .Site.Params.Links }}
-		<a href="{{ $element.path }}">{{ $element.name }}</a>
-	{{ end }}
-
-	<!-- {{ if .Site.Params.enableRSS }}
-	  <a class="button" href="{{ .Site.RSSLink }}">{{ with .Site.Params.subscribe }}{{ . }}{{ else }}{{ i18n "subscribe" }}{{ end }}</a>
-	{{ end }} -->
+<nav class="navigation" aria-label="{{ i18n "navigation" | default "Main" }}">
+	{{- $here := .RelPermalink }}
+	{{- if not .IsHome }}
+	<a href="{{ "/" | relURL }}"><span class="arrow" aria-hidden="true">←</span> {{ .Site.Params.home | default (i18n "home") }}</a>
+	{{- end }}
+	{{- /* Each label can be overridden with a site param of the same name. */}}
+	{{- range slice "archive" "tags" "about" "subscribe" }}
+	{{- $path := printf "/%s/" (cond (eq . "archive") "posts" .) | relURL }}
+	<a href="{{ $path }}"{{ if eq . "subscribe" }} class="button"{{ end }}{{ if eq $here $path }} aria-current="page"{{ end }}>{{ index $.Site.Params . | default (i18n .) }}</a>
+	{{- end }}
+	{{- range .Site.Params.Links }}
+	<a href="{{ .path }}">{{ .name }}</a>
+	{{- end }}
 </nav>

@@ -1,38 +1,40 @@
+{{/* Section lists (the archive) and taxonomy term pages (a single tag). */}}
 {{ define "main" }}
 {{ partial "profile.html" . }}
 
 <section id="archive">
+    {{ if eq .Kind "term" }}
+        <p class="list-label">{{ .Data.Singular | title }}: <strong>{{ .Data.Term }}</strong></p>
+    {{ end }}
+
     {{ range .Data.Pages.GroupByDate "2006" }}
         <div class="group">
-            <h3 class="key">
+            <h2 class="key">
                 {{ .Key }}
-            </h3>
+            </h2>
 
             {{ range .Pages }}
                 <div class="value">
                   <div class="date">
-                    <time datetime="{{ .PublishDate }}">{{ i18n "publishDateShort" . }}</time>
+                    <time datetime="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ i18n "publishDateShort" . }}</time>
                   </div>
                   <div class="title">
-                      <a href="{{ .Permalink }}">
+                      <a href="{{ .RelPermalink }}">
                           {{ .Title }}
                       </a>
 
                       {{ with .Params.tags }}
-                          <div class="tags">
+                          <span class="tags">
                               {{ range . }}
-                                  <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a>
+                                  <a href="{{ printf "tags/%s/" (. | urlize) | relURL }}">{{ . }}</a>
                               {{ end }}
-                          </div>
+                          </span>
                       {{ end}}
                   </div>
                 </div>
-            {{ end }}          
+            {{ end }}
         </div>
     {{ end }}
-
-
 </section>
-
 
 {{ end }}

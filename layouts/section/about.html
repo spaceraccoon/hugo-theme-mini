@@ -1,8 +1,8 @@
 {{ define "main" }}
 {{ partial "profile.html" . }}
 
-<section id="section">
-    {{ .Content }}
+<section id="section" class="content">
+    {{ partial "content.html" . }}
 
     {{ partial "comment.html" . }}
 </section>

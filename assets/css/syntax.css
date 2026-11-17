@@ -1,0 +1,196 @@
+/* Syntax highlighting for Chroma's class-based output.
+   Requires `markup.highlight.noClasses: false` in the site config.
+   Token groups follow Chroma's "emacs" style, with every colour adjusted to
+   meet WCAG AA (4.5:1) against the code background in both colour schemes. */
+
+:root {
+  --hl-comment: #236e25;
+  --hl-keyword: #8a1fd1;
+  --hl-string: #b03535;
+  --hl-escape: #a1541c;
+  --hl-number: #5c5c5c;
+  --hl-function: #00720f;
+  --hl-class: #1a3fd4;
+  --hl-variable: #7d5c00;
+  --hl-constant: #8b1a1a;
+  --hl-label: #6b6b00;
+  --hl-heading: #000080;
+  --hl-line: #fff3bf;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hl-comment: #7fbf7f;
+    --hl-keyword: #c792ea;
+    --hl-string: #f29191;
+    --hl-escape: #e6a66a;
+    --hl-number: #b0b0b0;
+    --hl-function: #7ad88a;
+    --hl-class: #8fb4ff;
+    --hl-variable: #e0c070;
+    --hl-constant: #ff9c9c;
+    --hl-label: #cfcf6a;
+    --hl-heading: #9db4ff;
+    --hl-line: #3a3520;
+  }
+}
+
+/* structure */
+.chroma .line {
+  display: flex;
+}
+
+.chroma .hl {
+  background: var(--hl-line);
+}
+
+.chroma .lntable {
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.chroma .lntd {
+  vertical-align: top;
+  padding: 0;
+  border: 0;
+}
+
+.chroma .lnt,
+.chroma .ln {
+  white-space: pre;
+  user-select: none;
+  margin-right: 0.4em;
+  padding: 0 0.4em;
+  color: var(--hl-number);
+}
+
+/* comments */
+.chroma .c,
+.chroma .ch,
+.chroma .cm,
+.chroma .c1,
+.chroma .cs,
+.chroma .cp,
+.chroma .cpf {
+  color: var(--hl-comment);
+}
+
+.chroma .c,
+.chroma .ch,
+.chroma .cm,
+.chroma .c1,
+.chroma .sd,
+.chroma .ge {
+  font-style: italic;
+}
+
+/* keywords, builtins, decorators */
+.chroma .k,
+.chroma .kc,
+.chroma .kd,
+.chroma .kn,
+.chroma .kp,
+.chroma .kr,
+.chroma .ow,
+.chroma .nb,
+.chroma .nd,
+.chroma .gu {
+  color: var(--hl-keyword);
+}
+
+/* strings and attribute names */
+.chroma .s,
+.chroma .sa,
+.chroma .sb,
+.chroma .sc,
+.chroma .dl,
+.chroma .sd,
+.chroma .s2,
+.chroma .sh,
+.chroma .s1,
+.chroma .na {
+  color: var(--hl-string);
+}
+
+.chroma .se,
+.chroma .si,
+.chroma .sr {
+  color: var(--hl-escape);
+}
+
+/* numbers, operators, program output */
+.chroma .m,
+.chroma .mb,
+.chroma .mf,
+.chroma .mh,
+.chroma .mi,
+.chroma .il,
+.chroma .mo,
+.chroma .o,
+.chroma .ni,
+.chroma .go {
+  color: var(--hl-number);
+}
+
+/* functions, types, tags, insertions */
+.chroma .nf,
+.chroma .kt,
+.chroma .nt,
+.chroma .sx,
+.chroma .gi {
+  color: var(--hl-function);
+}
+
+.chroma .nc,
+.chroma .nn,
+.chroma .gt {
+  color: var(--hl-class);
+}
+
+.chroma .nv,
+.chroma .ss {
+  color: var(--hl-variable);
+}
+
+.chroma .no,
+.chroma .ne,
+.chroma .gd,
+.chroma .gr {
+  color: var(--hl-constant);
+}
+
+.chroma .nl {
+  color: var(--hl-label);
+}
+
+.chroma .gh,
+.chroma .gp {
+  color: var(--hl-heading);
+}
+
+.chroma .k,
+.chroma .kc,
+.chroma .kd,
+.chroma .kn,
+.chroma .kr,
+.chroma .kt,
+.chroma .ow,
+.chroma .nn,
+.chroma .ne,
+.chroma .nt,
+.chroma .ni,
+.chroma .se,
+.chroma .si,
+.chroma .cs,
+.chroma .gh,
+.chroma .gp,
+.chroma .gu,
+.chroma .gs {
+  font-weight: 600;
+}
+
+.chroma .gl {
+  text-decoration: underline;
+}

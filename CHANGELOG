@@ -1,3 +1,13 @@
+## 2026.11.17  Version 3.0.0
+
+- [x] Accessibility: WCAG AA colour palette, labelled social links, one `<h1>` per page, valid `<time>` values, underlined links in content
+- [x] Performance: stylesheet inlined (moved to `assets/css`), sized avatar via `params.avatar` / `params.avatar2x`, lazy-loaded images with intrinsic dimensions
+- [x] Automatic dark mode (`prefers-color-scheme`)
+- [x] Class-based syntax highlighting with an accessible palette; requires `markup.highlight.noClasses: false`
+- [x] Footer links read from `params.social`; new `params.favicon`
+- [x] Tables scroll inside the text column instead of breaking words
+- [x] Requires Hugo 0.158.0+: `locale`, `pagination.pagerSize`, `services.*` config keys, embedded partials; KaTeX 0.19.1
+
 ## 2021.08.21  Version 2.2.0
 
 - [x] Support multiple languages

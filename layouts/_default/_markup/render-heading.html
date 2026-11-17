@@ -1,1 +1,10 @@
-<h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }} <a href="#{{ .Anchor | safeURL }}" class="anchor">🔗</a></h{{ .Level }}>
+{{- /* Every page already has an <h1> (the post or site title). When the
+       markdown also has top-level headings ("# Title", or "Title" underlined
+       with "===="), render all of its headings one level down so the outline
+       has a single h1. Markdown that starts at "##" is left as it is;
+       shifting it would skip a level. Fenced code is ignored when looking. */ -}}
+{{- $raw := replaceRE "(?s)```.*?```" "" .Page.RawContent -}}
+{{- $level := .Level -}}
+{{- if findRE `(?m)^# |^\S[^\n]*\n=+[ \t]*$` $raw 1 }}{{ $level = add $level 1 }}{{ end -}}
+{{- if gt $level 6 }}{{ $level = 6 }}{{ end -}}
+<h{{ $level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }} <a class="anchor" href="#{{ .Anchor | safeURL }}" aria-label="{{ i18n "permalink" | default "Permalink" }}: {{ .PlainText }}">#</a></h{{ $level }}>
